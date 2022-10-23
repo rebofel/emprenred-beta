@@ -1,10 +1,13 @@
 package com.emprenred.ecommerce.model;
 
+import javax.persistence.*;
 import java.util.Date;
-
+@Entity
+@Table(name = "ordenes")
 public class Orden {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String numero;
     private Date fechaCreacion;
@@ -12,9 +15,22 @@ public class Orden {
 
     private double total;
 
+    @ManyToOne
+    private Usuario usuario;
+
+    @OneToOne(mappedBy = "orden")
+    private DetalleOrden detalle;
+
     public Orden() {
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
     public Orden(Integer id, String numero, Date fechaCreacion, Date fechaRecibida, double total) {
         this.id = id;
@@ -63,6 +79,14 @@ public class Orden {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public DetalleOrden getDetalle() {
+        return detalle;
+    }
+
+    public void setDetalle(DetalleOrden detalle) {
+        this.detalle = detalle;
     }
 
     @Override

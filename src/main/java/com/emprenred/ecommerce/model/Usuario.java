@@ -1,7 +1,13 @@
 package com.emprenred.ecommerce.model;
 
-public class Usuario {
+import javax.persistence.*;
+import java.util.List;
 
+@Entity
+@Table(name = "usuarios")
+public class Usuario {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Campo autoincrementable
     private Integer id;
     private String nombre;
     private String username;
@@ -10,6 +16,12 @@ public class Usuario {
     private String telefono;
     private String tipo;
     private String password;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Producto> productos;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Orden> ordenes;
 
     public Usuario() {
 
@@ -90,6 +102,13 @@ public class Usuario {
         this.password = password;
     }
 
+    public List<Producto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
+    }
 
     @Override
     public String toString() {
